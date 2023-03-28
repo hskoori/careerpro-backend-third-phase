@@ -349,7 +349,7 @@ class ChangePasswordView(UpdateAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(['POST',])
+@api_view(['POST','GET'])
 @permission_classes((AllowAny, ))
 def forgot_password(request):
     # Check old password

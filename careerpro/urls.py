@@ -18,7 +18,26 @@ from django.urls import include, path
 from django.conf import settings
 from django.conf.urls.static import static
 
+from rest_framework import permissions
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
 
+# from notification.views import showFirebaseJS
+
+#swagger start
+schema_view = get_schema_view(
+   openapi.Info(
+      title="mahall API",
+      default_version='v1',
+      description="Test description",
+      terms_of_service="https://www.google.com/policies/terms/",
+      contact=openapi.Contact(email="contact@snippets.local"),
+      license=openapi.License(name="BSD License"),
+   ),
+   public=True,
+   permission_classes=[permissions.AllowAny],
+)
+#swagger end
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,6 +45,8 @@ urlpatterns = [
     path('api/v1/student/', include('student.urls', namespace='student_api')),
     path('api/v1/account/', include('account.urls', namespace='account_api')),
     path('api/v1/chat/', include('chat.urls', namespace='chat_api')),
+    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+
 
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

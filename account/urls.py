@@ -2,6 +2,7 @@ from django.urls import path,include
 from rest_framework import routers
 from . import views 
 
+
 from account.views import(
     AdminViewSet,
     forgot_password,
@@ -16,11 +17,9 @@ from account.views import(
     validate_email,
     EmailVerification
 )
-from rest_framework.authtoken.views import obtain_auth_token
+# from rest_framework.authtoken.views import obtain_auth_token
 
 app_name = 'account'
-
-
 router = routers.DefaultRouter()
 router.register('admin',AdminViewSet, basename='admin')
 

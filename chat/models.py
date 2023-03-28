@@ -72,10 +72,8 @@ class MessageFile(models.Model):
     )
     msg_file = models.FileField(upload_to ='msg_file',null=True,blank=True,default="")
 
-
-    
     def __str__(self):
-        return str(self.chat.name)
+        return str(self.account.full_name)
 
     class Meta:
         db_table = 'message_file'

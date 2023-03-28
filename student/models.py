@@ -3,11 +3,11 @@ from django.db import models
 from account.models import Account
 from django.utils.translation import gettext as _
 from main.models import BaseModel
-# from base_models.models import BaseModel
+#from base_models.models import BaseModel
 
 
 
-# Create your models here.
+#Create your models here.
 
 class Student(BaseModel):
     WORKING_TYPE =(
@@ -67,9 +67,8 @@ class Student(BaseModel):
 
     def __str__(self):
         return str(self.account.full_name)
-        
-
    
+ 
 class Specialization(BaseModel):
 
     STATUS_CHOICES= [
