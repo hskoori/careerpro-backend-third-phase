@@ -6,6 +6,7 @@ from chat.models import Chat,ChatMember,Message
 from chat.serializers import MessageSerializer
 from asgiref.sync import sync_to_async
 from channels.db import database_sync_to_async
+from main.functions import send_common_mail
 
 import django
 django.setup()
@@ -77,6 +78,25 @@ def get_last_id(msg_data):
     else:
         chat.unread=0
         chat.save()
+
+        s = set(admins)
+        for x in chat_members:
+            if x not in s:
+                account = Account.objects.filter(pk=x).first()
+                to_email = account.email
+                subject = "New message recieved from careerpro"
+                html_context = {
+                    "title":"New message recieved",
+                    "data":[
+                        {
+                            "label":">>",
+                            "value":msg_data["content"]
+                        }
+                    ]
+                }
+                send_common_mail(html_context,to_email,subject)
+
+
 
     return(msg_data)
 

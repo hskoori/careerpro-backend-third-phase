@@ -35,14 +35,12 @@ class SpecializationSerializer(serializers.ModelSerializer):
 
 
 class JobApplicationSerializer(serializers.ModelSerializer):
-    student_name = serializers.CharField(source='student.account.full_name',read_only = True)
     class Meta:
         model = JobApplication
-        fields = ['id','student','student_name','company','position','job_description','stage','last_date','job_link']
+        fields = ['id','company','position','job_description','last_date','job_link','country','category']
 
         extra_kwargs = {
                 'id': {'read_only': True},
-                'student_name': {'read_only': True},
         }	
 
 
@@ -178,7 +176,6 @@ class AccountSerializer(serializers.ModelSerializer):
 class StudentSerializer(serializers.ModelSerializer):
     account = AccountSerializer()
     specializations = SpecializationSerializer(many=True)
-    job_applications = JobApplicationSerializer(many=True)
 
     class Meta:
         model = Student
@@ -228,11 +225,9 @@ class StudentSerializer(serializers.ModelSerializer):
             'fees_paid',
             'application_submitted',
             'specializations',
-            'job_applications'
             ]
         extra_kwargs = {
         'balance':{'read_only': True},
-        'job_applications':{'read_only': True},
         'cv':{'read_only': True},
         'cover_letter':{'read_only': True},
         'cover_letter_two':{'read_only': True},
@@ -344,14 +339,12 @@ class UpdateStudentSerializer(serializers.ModelSerializer):
 
 
 class JobApplicationSerializer(serializers.ModelSerializer):
-    student_name = serializers.CharField(source='student.account.full_name',read_only = True)
     class Meta:
         model = JobApplication
-        fields = ['id','student','student_name','company','position','job_description','stage','last_date','job_link']
+        fields = ['id','company','position','job_description','last_date','job_link','country','category']
 
         extra_kwargs = {
                 'id': {'read_only': True},
-                'student_name': {'read_only': True},
         }	
 
 

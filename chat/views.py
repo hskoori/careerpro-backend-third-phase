@@ -75,7 +75,7 @@ class ChatViewSet(ModelViewSet):
                     chat = queryset,
                     account = admin
                 )
-                queryset = Chat.objects.filter(pk = queryset)
+                queryset = Chat.objects.filter(pk = queryset.pk)
                 
         serializer = ChatSerializer(queryset, many=True)
         return Response(serializer.data,status=status.HTTP_200_OK)
@@ -152,7 +152,6 @@ class MessageFileViewSet(ModelViewSet):
             data = serializer.data
             data["msg_file"] = data["msg_file"].replace("http://", "https://")
             request.build_absolute_uri(data["msg_file"])
-            print(request.build_absolute_uri(data["msg_file"]))
             return Response(data, status=status.HTTP_200_OK)
 
         else:

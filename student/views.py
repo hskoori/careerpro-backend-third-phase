@@ -164,9 +164,20 @@ class StudentFileViewSet(ModelViewSet):
 class JobApplicationViewSet(ModelViewSet):
     serializer_class = JobApplicationSerializer
     queryset = JobApplication.objects.all()
-    permission_classes = [IsAdminUser]
+    # permission_classes = [IsAuthenticated]
     filter_backends = [SearchFilter]
-    search_fields = ['student__account__email','student__account__full_name']
+    search_fields = ['company',"country","category","job_description","position"]
+
+    def get_queryset(self):
+        queryset = JobApplication.objects.all().order_by('auto_id')
+        country = self.request.query_params.get('country')
+        category = self.request.query_params.get('category')
+        if((country) and (country!="all")):
+            queryset = queryset.filter(country=country).order_by('auto_id')
+        if((category) and (category!="all")):
+            queryset = queryset.filter(category=category).order_by('auto_id')
+        return queryset
+    
     
 
 

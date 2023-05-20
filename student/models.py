@@ -102,15 +102,15 @@ class JobApplication(BaseModel):
         ('applied','Applied'),
         ('declined','Decline'),
         ('pending','Pending'),]
-    student = models.ForeignKey(Student,related_name='job_applications', on_delete=models.CASCADE)
+    # student = models.ForeignKey(Student,related_name='job_applications', on_delete=models.CASCADE)
     date = models.CharField(max_length=140,null=True,blank=True)
     company = models.CharField(max_length=140,null=False,blank=False)
     position = models.CharField(max_length=140,null=False,blank=False)
     job_description = models.CharField(max_length=140,null=False,blank=False)
-    stage = models.CharField(max_length=140,choices=STAGE_CHOICES,blank=False)
     last_date =  models.CharField(max_length=140,null=True,blank=True)
+    country =  models.CharField(max_length=140,null=True,blank=True)
+    category =  models.CharField(max_length=140,null=True,blank=True,default="others")
     job_link =  models.TextField(null=True,blank=True)
-
 
     class Meta:
         db_table = 'job_applications'
