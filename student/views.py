@@ -56,8 +56,8 @@ class StudentViewSet(ModelViewSet):
 
             if(not request.user.is_admin):
                 request.data["fees_paid"] = instance.fees_paid 
-
-            serializer = UpdateStudentSerializer(instance=instance,data=request.data)
+            data=request.data.copy()
+            serializer = UpdateStudentSerializer(instance=instance,data=data)
             if(serializer.is_valid()):
                 serializer.save()
                 Specialization.objects.filter(student=instance).delete()

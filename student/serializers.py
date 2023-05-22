@@ -70,9 +70,6 @@ class AccountSerializer(serializers.ModelSerializer):
 
 
 
-
-
-
       
 
 # class StudentSerializer2(serializers.ModelSerializer):
@@ -290,13 +287,13 @@ class UpdateStudentSerializer(serializers.ModelSerializer):
             # 'account',
             'address',
             'dob',
-            'profilepic',
-            'cv',
-            'cover_letter',
-            'cover_letter_two',
+            # 'profilepic',
+            # 'cv',
+            # 'cover_letter',
+            # 'cover_letter_two',
             'linkedin_profile',
-            'company_cv',
-            'company_cv_two',
+            # 'company_cv',
+            # 'company_cv_two',
             'linkedin_username',
             'linkedin_password',
             'university',
@@ -342,7 +339,6 @@ class JobApplicationSerializer(serializers.ModelSerializer):
     class Meta:
         model = JobApplication
         fields = ['id','company','position','job_description','last_date','job_link','country','category']
-
         extra_kwargs = {
                 'id': {'read_only': True},
         }	
@@ -353,6 +349,7 @@ class JobApplicationSerializer(serializers.ModelSerializer):
             **validated_data,
             auto_id = get_auto_id(JobApplication)
         )
+
         # student = validated_data['student']
         # email = student.account.email
 
