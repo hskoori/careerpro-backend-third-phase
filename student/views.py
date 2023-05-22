@@ -37,7 +37,7 @@ class StudentViewSet(ModelViewSet):
 
     def retrieve(self, request, pk=None):
         item = get_object_or_404(self.queryset, pk=pk)
-        serializer = StudentSerializer(item)
+        serializer = StudentSerializer(item, context={'request': self.request})
         return Response(serializer.data,status=status.HTTP_200_OK)
 
     def update(self, request, pk=None):
