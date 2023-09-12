@@ -394,13 +394,13 @@ def forgot_password(request):
         token = Token.objects.get(user=user).key
         # from_email = "mail.osperb@gmail.com"
         to_email = user.email
-        subject = "Password changed Successfully"
+        subject = "Reset your password"
         html_context = {
-            "title":"Password changed Successfully",
+            "title":"Reset your password",
             "data":[
 
                 {
-                    "label":"Click the link below to reset your password :",
+                    "label":"Click the link to reset your password :",
                     "value":"https://careerpro.uk/password/reset/" + token,
                     "type":"url",
                     "title":">> Click here <<"
