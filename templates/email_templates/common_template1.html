@@ -407,7 +407,12 @@
                         <tr>
                           <td>{{item.label}}</td>
                           <td>
+                            {% if item.type == "url"%}
+                            <a href="{{item.value}}"><b>{{item.title}}</b></a>
+
+                            {% else %}
                             <b>{{item.value}}</b>
+                            {% endif %}
                           </td>
                         </tr>
                         {% endfor %}

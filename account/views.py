@@ -173,29 +173,60 @@ class EmailVerification(APIView):
 
 
         
+# def resend_otp(request):
+#     response_data = {}
+#     email = request.GET.get('email')
+#     if(OtpVerification.objects.filter(user__email=email).exists()):
+#         otp_verification = OtpVerification.objects.filter(user__email=email).first()
+#         user = otp_verification.user
+#         subject = "Please Verify Your Email Address"
+#         text_content = "Dear <b>{}</b>,</br><p>We need to verify that {} is your email address so that it can be used with your careerpro account.<br>OTP : <b>{}</b></p>".format(user.full_name,email,otp_verification.otp)
+#         send_mail(text_content,email,subject)
+
+#         response_data['response'] = 'OTP is sent to your email'
+#         response_data['email'] = user.email
+#         response_data['otp_verification'] = str(otp_verification.id)
+#         response_data['status']="true"
+#         status_code = status.HTTP_200_OK
+
+#     else:
+#         response_data['status']="false"
+#         response_data['response'] = 'Invalid Email.'
+#         status_code = status.HTTP_400_BAD_REQUEST
+
+#     return HttpResponse(json.dumps(response_data),content_type='application/javascript',status=status_code)
+
+
+@api_view(['POST',])
+@permission_classes((AllowAny, ))
+@parser_classes([JSONParser,FormParser, MultiPartParser,FileUploadParser])
 def resend_otp(request):
-    response_data = {}
-    email = request.GET.get('email')
-    if(OtpVerification.objects.filter(user__email=email).exists()):
-        otp_verification = OtpVerification.objects.filter(user__email=email).first()
-        user = otp_verification.user
-        subject = "Please Verify Your Email Address"
-        text_content = "Dear <b>{}</b>,</br><p>We need to verify that {} is your email address so that it can be used with your careerpro account.<br>OTP : <b>{}</b></p>".format(user.full_name,email,otp_verification.otp)
-        send_mail(text_content,email,subject)
+    status_code=status.HTTP_400_BAD_REQUEST
+    if request.method == 'POST':
+        data = {}
+        session_key = request.data.get('session_key')
+        my_session = SessionStore(session_key=session_key)
+        status_code=status.HTTP_200_OK
 
-        response_data['response'] = 'OTP is sent to your email'
-        response_data['email'] = user.email
-        response_data['otp_verification'] = str(otp_verification.id)
-        response_data['status']="true"
-        status_code = status.HTTP_200_OK
-
+        to_email = my_session['email']
+        subject = "OTP verification"
+        html_context = {
+            "title":"OTP verification",
+            "data":[
+                {
+                    "label":"Your OTP is : ",
+                    "value":my_session['login_otp']
+                }
+            ]
+        }
+        send_common_mail(html_context,to_email,subject)
+        data['session_key'] = my_session.session_key
+        print(my_session['login_otp'])
     else:
-        response_data['status']="false"
-        response_data['response'] = 'Invalid Email.'
-        status_code = status.HTTP_400_BAD_REQUEST
-
-    return HttpResponse(json.dumps(response_data),content_type='application/javascript',status=status_code)
-
+        data = {"error":"somthing went wrong !"}
+        status_code=status.HTTP_400_BAD_REQUEST
+    return Response(data,status=status_code)
+    
 
 # ==============================================
 
@@ -360,6 +391,45 @@ def forgot_password(request):
         user = Account.objects.get(email=request.data.get('email'))
         user.set_password(password)
         user.save()
+        token = Token.objects.get(user=user).key
+        # from_email = "mail.osperb@gmail.com"
+        to_email = user.email
+        subject = "Password changed Successfully"
+        html_context = {
+            "title":"Password changed Successfully",
+            "data":[
+
+                {
+                    "label":"Click the link below to reset your password :",
+                    "value":"https://careerpro.uk/password/reset/" + token,
+                    "type":"url",
+                    "title":">> Click here <<"
+                }
+            ]
+        }
+
+        text_content = str(html_context)
+        send_common_mail(html_context,to_email,subject)
+        data['response'] = "Your new password has been sent to your email"
+        
+    else:
+        data['response'] = "Email does not exist"
+
+    return Response(data, status=status.HTTP_200_OK)
+
+
+
+@api_view(['POST','GET'])
+@permission_classes((AllowAny, ))
+def new_password(request,token_id):
+    # Check old password
+    token = Token.objects.get(key=token_id)
+    data = {}
+    if(request.data.get('newPassword')==request.data.get('confirmPassword')):
+        user = token.user
+        user.set_password(request.data.get('newPassword'))
+        user.save()
+        token = Token.objects.get(user=user).key
         # from_email = "mail.osperb@gmail.com"
         to_email = user.email
         subject = "Password changed Successfully"
@@ -372,18 +442,18 @@ def forgot_password(request):
                 },
                 {
                     "label":"Your New Password",
-                    "value":password
-                }
+                    "value":request.data.get('newPassword')
+                },
             ]
         }
-        text_content = str(html_context)
         send_common_mail(html_context,to_email,subject)
         data['response'] = "Your new password has been sent to your email"
         
     else:
-        data['response'] = "Email does not exist"
+        data['response'] = "Validation error !"
 
     return Response(data, status=status.HTTP_200_OK)
+
 
 
 
