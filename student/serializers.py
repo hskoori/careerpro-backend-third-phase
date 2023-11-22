@@ -222,6 +222,9 @@ class StudentSerializer(serializers.ModelSerializer):
             'fees_paid',
             'application_submitted',
             'specializations',
+            'is_no_internship',
+            'is_internship_interested'
+
             ]
         extra_kwargs = {
         'balance':{'read_only': True},
@@ -327,6 +330,8 @@ class UpdateStudentSerializer(serializers.ModelSerializer):
             'visa_end_date',
             'fees_paid',
             'application_submitted',
+            'is_no_internship',
+            'is_internship_interested'
             # 'specializations'
             ]
         extra_kwargs = {

@@ -40,6 +40,8 @@ class Student(BaseModel):
     third_preferred_location = models.CharField(max_length=140,null=True,blank=True)
     forth_preferred_location = models.CharField(max_length=140,null=True,blank=True)
     working_type = models.CharField(max_length=80,choices= WORKING_TYPE,null=True,blank=True)
+    is_no_internship = models.BooleanField(default=False)
+    is_internship_interested = models.BooleanField(default=False)
     work_start_date = models.CharField(max_length=80,null=True,blank=True)
     work_end_date = models.CharField(max_length=80,null=True,blank=True)
     work_duration = models.CharField(max_length=50,null=True,blank=True)
