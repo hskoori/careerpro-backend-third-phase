@@ -223,8 +223,14 @@ class StudentSerializer(serializers.ModelSerializer):
             'application_submitted',
             'specializations',
             'is_no_internship',
-            'is_internship_interested'
-
+            'is_internship_interested',
+            'current_location',
+            'is_previous_experience',
+            'is_work_experience',
+            'is_confident_workplace_skills',
+            'has_academic_projects',
+            'is_include_work_project',
+            'has_internship_experience',
             ]
         extra_kwargs = {
         'balance':{'read_only': True},
@@ -331,8 +337,14 @@ class UpdateStudentSerializer(serializers.ModelSerializer):
             'fees_paid',
             'application_submitted',
             'is_no_internship',
-            'is_internship_interested'
-            # 'specializations'
+            'is_internship_interested',
+            'current_location',
+            'is_previous_experience',
+            'is_work_experience',
+            'is_confident_workplace_skills',
+            'has_academic_projects',
+            'is_include_work_project',
+            'has_internship_experience',
             ]
         extra_kwargs = {
         'balance':{'read_only': True},

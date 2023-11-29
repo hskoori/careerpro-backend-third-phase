@@ -61,6 +61,14 @@ class Student(BaseModel):
     fees_paid = models.BooleanField(default=False)
     application_submitted = models.BooleanField(default=False)
 
+    current_location = models.TextField(null=True,blank=True)
+    is_previous_experience = models.BooleanField(default=False)
+    is_work_experience = models.BooleanField(default=False)
+    is_confident_workplace_skills = models.BooleanField(default=False)
+    has_academic_projects = models.BooleanField(default=False)
+    is_include_work_project = models.BooleanField(default=False)
+    has_internship_experience = models.BooleanField(default=False)
+
     class Meta:
         db_table = 'student'
         verbose_name = ('Student')
