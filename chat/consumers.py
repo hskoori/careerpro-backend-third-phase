@@ -89,7 +89,7 @@ def get_last_id(msg_data):
                     "title":"New message recieved from careerpro check with your Mobile App",
                     "data":[
                         {
-                            "label":">>:",
+                            "label":"message:",
                             "value":msg_data["content"]
                         }
                     ]
