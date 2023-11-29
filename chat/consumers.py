@@ -84,12 +84,12 @@ def get_last_id(msg_data):
             if x not in s:
                 account = Account.objects.filter(pk=x).first()
                 to_email = account.email
-                subject = "New message recieved from careerpro"
+                subject = "New message recieved from careerpro check with your Mobile App"
                 html_context = {
-                    "title":"New message recieved",
+                    "title":"New message recieved from careerpro check with your Mobile App",
                     "data":[
                         {
-                            "label":">>",
+                            "label":">>:",
                             "value":msg_data["content"]
                         }
                     ]
