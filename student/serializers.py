@@ -366,6 +366,38 @@ class JobApplicationSerializer(serializers.ModelSerializer):
             **validated_data,
             auto_id = get_auto_id(JobApplication)
         )
+        students = Student.objects.filter(fees_paid=True)
+        for student in students:
+            to_email = student.account.email
+            to_email = "hashidsharafkoori@gmail.com"
+            subject = "Vacancy alert ! / Backend developer"
+            html_context = {
+                "title":"New job vacancy posted at CareerPro. Use your mobile app to apply.",
+                "data":[
+                    {
+                        "label":"Company:",
+                        "value":job_application.company
+                    },
+                    {
+                        "label":"Position:",
+                        "value":job_application.position
+                    },
+                    {
+                        "label":"Dead Line:",
+                        "value":job_application.last_date
+                    },
+                    {
+                        "label":"Country:",
+                        "value":job_application.country
+                    },
+                    {
+                        "label":"Description:",
+                        "value":job_application.job_description
+                    }
+                ]
+            }
+            send_common_mail(html_context,to_email,subject)
+
 
         # student = validated_data['student']
         # email = student.account.email
