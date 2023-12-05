@@ -369,7 +369,6 @@ class JobApplicationSerializer(serializers.ModelSerializer):
         students = Student.objects.filter(fees_paid=True)
         for student in students:
             to_email = student.account.email
-            to_email = "hashidsharafkoori@gmail.com"
             subject = "Vacancy alert ! / Backend developer"
             html_context = {
                 "title":"New job vacancy posted at CareerPro. Use your mobile app to apply.",
