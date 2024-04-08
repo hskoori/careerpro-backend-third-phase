@@ -20,7 +20,6 @@ class ChatSerializer(serializers.ModelSerializer):
             'member'
         ]
 
-
 class ChatMemberSerializer(serializers.ModelSerializer):
     class Meta:
         model = ChatMember
@@ -48,8 +47,6 @@ class MessageSerializer(serializers.ModelSerializer):
             'sender_name',
             'msg_type'
         ]
-
-
 
 class MessageFileSerializer(serializers.ModelSerializer):
     class Meta:

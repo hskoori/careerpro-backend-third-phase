@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-kqtk#co*ugo!ub5c_@)4do^h(frhjzv(^t9ogr(ayqi0_8d49c'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 # CSRF_TRUSTED_ORIGINS = ['*']
@@ -140,17 +140,23 @@ CORS_ALLOW_CREDENTIALS = True
 # }  
 
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'v2_careerpro',
+#         'USER': 'v2_careerprouser',
+#         'PASSWORD': 'careeRprO00@2w2332:osperB',
+#         'HOST': '139.59.60.16',
+#         'PORT': '5432',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'v2_careerpro',
-        'USER': 'v2_careerprouser',
-        'PASSWORD': 'careeRprO00@2w2332:osperB',
-        'HOST': '139.59.60.16',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 AUTH_USER_MODEL = 'account.Account'
 

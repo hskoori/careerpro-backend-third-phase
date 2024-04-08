@@ -18,12 +18,34 @@ class MyAccountManager(BaseUserManager):
             email=self.normalize_email(email),
             # username=username,
             password=password,
+            phone=phone,
             
         )
 
         user.set_password(password)
         user.save(using=self._db)
         return user
+
+    
+    # use_in_migrations = True
+
+    # def _create_user(self, email, password, **extra_fields):
+    #     """Create and save a User with the given email and password."""
+    #     if not email:
+    #         raise ValueError('The given email must be set')
+    #     email = self.normalize_email(email)
+    #     user = self.model(email=email, **extra_fields)
+    #     user.set_password(password)
+    #     user.save(using=self._db)
+    #     return user
+
+    def create_user(self, email, password=None, **extra_fields):
+        """Create and save a regular User with the given email and password."""
+        extra_fields.setdefault('is_staff', False)
+        extra_fields.setdefault('is_superuser', False)
+        extra_fields.setdefault('is_admin', False)
+        return self._create_user(email, password, **extra_fields)
+    
 
     def create_superuser(self, email,phone, password):
         user = self.create_user(
@@ -42,7 +64,7 @@ class MyAccountManager(BaseUserManager):
 
 class Account(AbstractBaseUser):
     email = models.EmailField(verbose_name="email", max_length=60, unique=True)
-    # username = models.CharField(max_length=60, unique=True)
+    username = models.CharField(max_length=60,)
     date_joined = models.DateTimeField(verbose_name='date joined', auto_now_add=True)
     last_login = models.DateTimeField(verbose_name='last login', auto_now=True)
     is_admin = models.BooleanField(default=False,null=True,blank=True)

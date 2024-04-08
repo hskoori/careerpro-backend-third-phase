@@ -58,9 +58,8 @@ class Student(BaseModel):
     course_duration = models.CharField(max_length=50,null=True,blank=True)
     visa_start_date =  models.CharField(max_length=50,null=True,blank=True)
     visa_end_date =  models.CharField(max_length=50,null=True,blank=True)
-    fees_paid = models.BooleanField(default=False)
+    fees_paid = models.BooleanField(default=True)
     application_submitted = models.BooleanField(default=False)
-
     current_location = models.TextField(null=True,blank=True)
     is_previous_experience = models.BooleanField(default=False)
     is_work_experience = models.BooleanField(default=False)
@@ -112,13 +111,17 @@ class JobApplication(BaseModel):
         ('applied','Applied'),
         ('declined','Decline'),
         ('pending','Pending'),]
+    
     # student = models.ForeignKey(Student,related_name='job_applications', on_delete=models.CASCADE)
     date = models.CharField(max_length=140,null=True,blank=True)
+    title = models.CharField(max_length=255)
+    description = models.TextField(blank=True, null=True)
     company = models.CharField(max_length=140,null=False,blank=False)
     position = models.CharField(max_length=140,null=False,blank=False)
     job_description = models.CharField(max_length=140,null=False,blank=False)
     last_date =  models.CharField(max_length=140,null=True,blank=True)
     country =  models.CharField(max_length=140,null=True,blank=True)
+    image =  models.ImageField(upload_to='images/',null=True,blank=True)
     category =  models.CharField(max_length=140,null=True,blank=True,default="others")
     job_link =  models.TextField(null=True,blank=True)
 
@@ -128,8 +131,10 @@ class JobApplication(BaseModel):
         verbose_name_plural = _('job_applications')
         ordering = ('-date_added',)
 
+    # def __str__(self):
+    #     return "{} - {}".format(self.company,self.student.account.full_name)
     def __str__(self):
-        return "{} - {}".format(self.company,self.student.account.full_name)
+        return self.company
 
 
 class StudentNote(BaseModel):

@@ -13,8 +13,8 @@ from django.contrib.auth import authenticate,logout
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.viewsets import  ModelViewSet
-
-from account.serializers import  AccountPropertiesSerializer, RegistrationSerializer, ChangePasswordSerializer,AdminSerializer
+from rest_framework import generics, permissions
+from account.serializers import  AccountPropertiesSerializer, RegistrationSerializer, ChangePasswordSerializer,AdminSerializer , AccountSerializer
 from account.models import Account
 from rest_framework.authtoken.models import Token
 from rest_framework.parsers import JSONParser,FormParser, MultiPartParser,FileUploadParser
@@ -305,11 +305,31 @@ def logout_view(request):
         context['response'] = 'Error'
         context['error_message'] = 'Invalid Token'
         status_code=status.HTTP_400_BAD_REQUEST
-    
+        
     return Response(context,status=status_code)
 
+# @api_view(['POST'])
+# @permission_classes((IsAuthenticated,))
+# @parser_classes([JSONParser, FormParser, MultiPartParser, FileUploadParser])
+# def delete_user_account(request):
+#     user = request.user
+#     instance = get_object_or_404(Account, id=request.data.get('account_id'))  
+#     if user.is_admin or instance.student.account == user:
+#         instance.delete()
+#         data = {"response": "Successfully deleted"}
+#         return Response(data, status=status.HTTP_204_NO_CONTENT)
+#     else:
+#         data = {"response": "Access denied"}
+#         return Response(data, status=status.HTTP_403_FORBIDDEN)
 
+class DeleteAccount(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+    def delete(self, request, *args, **kwargs):
+        user=self.request.user
+        user.delete()
+        return Response({"result":"Account delete"},status=status.HTTP_204_NO_CONTENT)
 
+    
 @api_view(['GET','POST'])
 @permission_classes((IsAuthenticated, ))
 @parser_classes([JSONParser,FormParser, MultiPartParser,FileUploadParser])

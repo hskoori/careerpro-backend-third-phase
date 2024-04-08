@@ -355,7 +355,7 @@ class UpdateStudentSerializer(serializers.ModelSerializer):
 class JobApplicationSerializer(serializers.ModelSerializer):
     class Meta:
         model = JobApplication
-        fields = ['id','company','position','job_description','last_date','job_link','country','category']
+        fields = ['id','title','description','image','company','position','job_description','last_date','job_link','country','category']
         extra_kwargs = {
                 'id': {'read_only': True},
         }	

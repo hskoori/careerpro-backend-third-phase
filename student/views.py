@@ -89,10 +89,25 @@ class StudentViewSet(ModelViewSet):
             if(user.is_admin or (instance.student.account == user)):
                 Account.objects.filter(id=instance.account.id).delete()
                 data = {"response":"Successfully deleted"}
+                return Response(data, status=status.HTTP_204_NO_CONTENT)
+
             else:
                 data = {"response":"Access denied"}
 
             return Response(data,status=status.HTTP_204_NO_CONTENT)
+    
+    
+    # def destroy(self, request, *args, pk=None, **kwargs):
+    #     user = self.request.user
+    #     instance = self.get_object()
+
+    #     if instance.student.account == user.account:
+    #         Account.objects.filter(id=instance.account.id).delete()
+    #         data = {"response": "Successfully deleted"}
+    #         return Response(data, status=status.HTTP_204_NO_CONTENT)
+    #     else:
+    #         data = {"response": "Access denied"}
+    #         return Response(data, status=status.HTTP_403_FORBIDDEN)
 
     
     # def retrieve(self, request, pk=None, *args, **kwargs):
