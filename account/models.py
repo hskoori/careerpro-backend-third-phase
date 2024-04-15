@@ -7,59 +7,100 @@ from rest_framework.authtoken.models import Token
 import uuid 
 
 
+# class MyAccountManager(BaseUserManager):
+#     def create_user(self, email, phone, password=None):
+#         if not email:
+#             raise ValueError('Users must have an email address')
+#         # if not username:
+#         #     raise ValueError('Users must have a username')
+
+#         user = self.model(
+#             email=self.normalize_email(email),
+#             # username=username,
+#             password=password,
+#             phone=phone,
+            
+#         )
+
+#         user.set_password(password)
+#         user.save(using=self._db)
+#         return user
+
+    
+#     # use_in_migrations = True
+
+#     # def _create_user(self, email, password, **extra_fields):
+#     #     """Create and save a User with the given email and password."""
+#     #     if not email:
+#     #         raise ValueError('The given email must be set')
+#     #     email = self.normalize_email(email)
+#     #     user = self.model(email=email, **extra_fields)
+#     #     user.set_password(password)
+#     #     user.save(using=self._db)
+#     #     return user
+
+#     def create_user(self, email, password=None, **extra_fields):
+#         """Create and save a regular User with the given email and password."""
+#         extra_fields.setdefault('is_staff', False)
+#         extra_fields.setdefault('is_superuser', False)
+#         extra_fields.setdefault('is_admin', False)
+#         return self._create_user(email, password, **extra_fields)
+    
+
+#     # def create_superuser(self, email,phone, password):
+#     #     user = self.create_user(
+#     #         email=self.normalize_email(email),
+#     #         password=password,
+#     #         phone=phone,
+#     #         # username=username,
+#     #     )
+#     #     user.is_admin = True
+#     #     user.is_staff = True
+#     #     user.is_superuser = True
+#     #     user.role = 'admin'
+#     #     user.save(using=self._db)
+        
+#     #     return user
+#     def create_superuser(self, email, phone, password):
+#         user = self.create_user(
+#             email=self.normalize_email(email),
+#             password=password,
+#             phone=phone,
+#         )
+#         user.is_admin = True
+#         user.is_staff = True
+#         user.is_superuser = True
+#         user.role = 'admin'
+#         user.save(using=self._db)
+        
+#         return user
 class MyAccountManager(BaseUserManager):
-    def create_user(self, email, phone, password=None):
+    def create_user(self, email, phone, password=None, **extra_fields):
         if not email:
             raise ValueError('Users must have an email address')
-        # if not username:
-        #     raise ValueError('Users must have a username')
 
         user = self.model(
             email=self.normalize_email(email),
-            # username=username,
-            password=password,
             phone=phone,
-            
+            **extra_fields
         )
 
         user.set_password(password)
         user.save(using=self._db)
         return user
-
     
-    # use_in_migrations = True
-
-    # def _create_user(self, email, password, **extra_fields):
-    #     """Create and save a User with the given email and password."""
-    #     if not email:
-    #         raise ValueError('The given email must be set')
-    #     email = self.normalize_email(email)
-    #     user = self.model(email=email, **extra_fields)
-    #     user.set_password(password)
-    #     user.save(using=self._db)
-    #     return user
-
-    def create_user(self, email, password=None, **extra_fields):
-        """Create and save a regular User with the given email and password."""
-        extra_fields.setdefault('is_staff', False)
-        extra_fields.setdefault('is_superuser', False)
-        extra_fields.setdefault('is_admin', False)
-        return self._create_user(email, password, **extra_fields)
-    
-
-    def create_superuser(self, email,phone, password):
+    def create_superuser(self, email, phone, password, **extra_fields):
         user = self.create_user(
-            email=self.normalize_email(email),
-            password=password,
+            email=email,
             phone=phone,
-            # username=username,
+            password=password,
+            **extra_fields
         )
         user.is_admin = True
         user.is_staff = True
         user.is_superuser = True
         user.role = 'admin'
         user.save(using=self._db)
-        
         return user
 
 class Account(AbstractBaseUser):

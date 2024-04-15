@@ -112,18 +112,20 @@ class JobApplication(BaseModel):
         ('declined','Decline'),
         ('pending','Pending'),]
     
-    # student = models.ForeignKey(Student,related_name='job_applications', on_delete=models.CASCADE)
-    date = models.CharField(max_length=140,null=True,blank=True)
+    # # student = models.ForeignKey(Student,related_name='job_applications', on_delete=models.CASCADE)
+    date = models.DateField(auto_now_add=True) 
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
-    company = models.CharField(max_length=140,null=False,blank=False)
-    position = models.CharField(max_length=140,null=False,blank=False)
-    job_description = models.CharField(max_length=140,null=False,blank=False)
-    last_date =  models.CharField(max_length=140,null=True,blank=True)
-    country =  models.CharField(max_length=140,null=True,blank=True)
-    image =  models.ImageField(upload_to='images/',null=True,blank=True)
-    category =  models.CharField(max_length=140,null=True,blank=True,default="others")
-    job_link =  models.TextField(null=True,blank=True)
+    image = models.ImageField(upload_to='images/', null=True, blank=True)
+
+    # company = models.CharField(max_length=140,null=False,blank=False)
+    # position = models.CharField(max_length=140,null=False,blank=False)
+    # job_description = models.CharField(max_length=140,null=False,blank=False)
+    # last_date =  models.CharField(max_length=140,null=True,blank=True)
+    # country =  models.CharField(max_length=140,null=True,blank=True)
+    # image =  models.ImageField(upload_to='images/',null=True,blank=True)
+    # category =  models.CharField(max_length=140,null=True,blank=True,default="others")
+    # job_link =  models.TextField(null=True,blank=True)
 
     class Meta:
         db_table = 'job_applications'
@@ -134,7 +136,7 @@ class JobApplication(BaseModel):
     # def __str__(self):
     #     return "{} - {}".format(self.company,self.student.account.full_name)
     def __str__(self):
-        return self.company
+        return self.title
 
 
 class StudentNote(BaseModel):
@@ -152,8 +154,3 @@ class StudentNote(BaseModel):
 
     def __str__(self):
         return str(self.title)
-        
-
-
-
-

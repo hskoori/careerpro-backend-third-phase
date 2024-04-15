@@ -23,7 +23,7 @@ admin.site.register(Specialization,SpecializationAdmin)
 
 
 class JobApplicationAdmin(admin.ModelAdmin):
-    list_display = ('auto_id','company')
+    list_display = ('auto_id','title','date')
 admin.site.register(JobApplication,JobApplicationAdmin)
 
 

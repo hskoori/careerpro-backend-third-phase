@@ -181,21 +181,18 @@ class JobApplicationViewSet(ModelViewSet):
     queryset = JobApplication.objects.all()
     # permission_classes = [IsAuthenticated]
     filter_backends = [SearchFilter]
-    search_fields = ['company',"country","category","job_description","position"]
+    search_fields = ['title','description  ']
 
-    def get_queryset(self):
-        queryset = JobApplication.objects.all().order_by('auto_id')
-        country = self.request.query_params.get('country')
-        category = self.request.query_params.get('category')
-        if((country) and (country!="all")):
-            queryset = queryset.filter(country=country).order_by('auto_id')
-        if((category) and (category!="all")):
-            queryset = queryset.filter(category=category).order_by('auto_id')
-        return queryset
+    # def get_queryset(self):
+    #     queryset = JobApplication.objects.all().order_by('auto_id')
+    #     # country = self.request.query_params.get('country')
+    #     category = self.request.query_params.get('category')
+    #     if((country) and (country!="all")):
+    #         queryset = queryset.filter(country=country).order_by('auto_id')
+    #     if((category) and (category!="all")):
+    #         queryset = queryset.filter(category=category).order_by('auto_id')
+    #     return queryset
     
-    
-
-
 class StudentNoteViewSet(ModelViewSet):
     serializer_class = StudentNoteSerializer
     queryset = StudentNote.objects.all()
