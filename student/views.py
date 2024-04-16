@@ -181,7 +181,7 @@ class JobApplicationViewSet(ModelViewSet):
     queryset = JobApplication.objects.all()
     # permission_classes = [IsAuthenticated]
     filter_backends = [SearchFilter]
-    search_fields = ['title','description  ']
+    search_fields = ['title','description']
 
     # def get_queryset(self):
     #     queryset = JobApplication.objects.all().order_by('auto_id')
