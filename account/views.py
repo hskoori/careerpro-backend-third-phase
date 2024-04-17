@@ -270,10 +270,9 @@ def login_view(request):
     context = {}
     email = request.data.get('email')
     password = request.data.get('password')
-    user = authenticate(email=email,password=password)
-    # print("user //")
-    # print(user)
 
+    user = authenticate(email=email,password=password)
+   
     if user:
         try:
             token = Token.objects.get(user=user)
