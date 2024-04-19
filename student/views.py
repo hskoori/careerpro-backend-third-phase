@@ -13,6 +13,7 @@ from main.functions import get_auto_id
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.pagination import PageNumberPagination
 from chat.models import Chat,ChatMember
+from rest_framework.settings import api_settings
 
 
 # Create your views here.
@@ -182,6 +183,22 @@ class JobApplicationViewSet(ModelViewSet):
     # permission_classes = [IsAuthenticated]
     filter_backends = [SearchFilter]
     search_fields = ['title','description']
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+    def perform_create(self, serializer):
+        serializer.save()
+
+    def get_success_headers(self, data):
+        try:
+            return {'Location': str(data[api_settings.URL_FIELD_NAME])}
+        except (TypeError, KeyError):
+            return {}
 
     # def get_queryset(self):
     #     queryset = JobApplication.objects.all().order_by('auto_id')
