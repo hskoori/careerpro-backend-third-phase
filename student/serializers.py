@@ -35,12 +35,16 @@ class SpecializationSerializer(serializers.ModelSerializer):
 
 
 class JobApplicationSerializer(serializers.ModelSerializer):
+    # auto_id = serializers.IntegerField(required=False) 
     class Meta:
         model = JobApplication
-        fields = ['id','title','description','image','date']
+        fields = ['id', 'auto_id','date','title','description','image']
+        # fields = ['id','title','description','image','date']
+
 
         extra_kwargs = {
                 'id': {'read_only': True},
+                'auto_id': {'read_only': True},
         }	
 
 

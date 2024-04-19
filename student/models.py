@@ -115,16 +115,15 @@ class JobApplication(BaseModel):
     # student = models.ForeignKey(Student,related_name='job_applications', on_delete=models.CASCADE)
     date = models.DateField(auto_now_add=True) 
     title = models.CharField(max_length=255)
-    description = models.TextField(blank=True, null=True)
+    description = models.TextField(blank=False, null=False)
     image = models.ImageField(upload_to='images/', null=True, blank=True)
-
-    company = models.CharField(max_length=140,null=True,blank=True)
-    position = models.CharField(max_length=140,null=True,blank=True)
-    job_description = models.CharField(max_length=140,null=True,blank=True)
-    last_date =  models.CharField(max_length=140,null=True,blank=True)
-    country =  models.CharField(max_length=140,null=True,blank=True)
+    company = models.CharField(max_length=140, null=True, blank=True, default=" ") #migration
+    position = models.CharField(max_length=140,null=True,blank=True ,default=" ")
+    job_description = models.CharField(max_length=140,null=True,blank=True ,default=" ")
+    last_date =  models.CharField(max_length=140,null=True,blank=True , default=" ")
+    country =  models.CharField(max_length=140,null=True,blank=True , default=" ")
     category =  models.CharField(max_length=140,null=True,blank=True,default="others")
-    job_link =  models.TextField(null=True,blank=True)
+    job_link =  models.TextField(null=True,blank=True, default=" ")
 
     class Meta:
         db_table = 'job_applications'
