@@ -123,7 +123,6 @@ class JobApplication(BaseModel):
     job_description = models.CharField(max_length=140,null=True,blank=True)
     last_date =  models.CharField(max_length=140,null=True,blank=True)
     country =  models.CharField(max_length=140,null=True,blank=True)
-    image =  models.ImageField(upload_to='images/',null=True,blank=True)
     category =  models.CharField(max_length=140,null=True,blank=True,default="others")
     job_link =  models.TextField(null=True,blank=True)
 
