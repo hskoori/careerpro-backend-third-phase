@@ -468,10 +468,8 @@ def new_password(request,token_id):
         }
         send_common_mail(html_context,to_email,subject)
         data['response'] = "Your new password has been sent to your email"
-        
     else:
         data['response'] = "Validation error !"
-
     return Response(data, status=status.HTTP_200_OK)
 
 
