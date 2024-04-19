@@ -1,6 +1,6 @@
 # **/migrations
 # */migrations
-*/migrations/0*
+# */migrations/0*
 # /!_init__.py
 */__pycache__
 **/__pycache__
